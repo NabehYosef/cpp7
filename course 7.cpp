@@ -204,11 +204,11 @@ bool CheckScalarMatrix(int arr1[3][3], int row, int col) {
 }
 //=====================================
 //=====================================
-//13/3 Count Number in Matrix
+//15/3 Count Number in Matrix
 int CountNumberInMatrix(int arr[3][3] ,int row, int col,int Num) {
 	int counter = 0;
 	for (int i = 0; i < row; i++) {
-		for (int j = 0; j <= col; j++) {
+		for (int j = 0; j < col; j++) {
 			if (arr[i][j]==Num) {
 				counter++;
 			}
@@ -218,8 +218,82 @@ int CountNumberInMatrix(int arr[3][3] ,int row, int col,int Num) {
 }
 //=====================================
 //=====================================
-//14/3 Check Sparse Matrix
-
+//16/3 Check Sparse Matrix
+bool IsSparseMatrix(int arr[3][3], int row, int col) {
+	int counterNum = 0;
+	int counterZero = 0;
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			if (arr[i][j] == 0) {
+				counterZero++;
+			}
+			else {
+				counterNum++;
+			}
+		}
+	}
+	return counterZero > counterNum;
+}
+//instructor Solution 
+bool IsSparseMatrixWay2(int arr[3][3], int row, int col) {
+	int MatrixSize = row * col;
+	return (CountNumberInMatrix(arr, row, col, 0) >= (MatrixSize / 2));
+}
+//=====================================
+//=====================================
+//#17/3 Check Number exist in Matrix
+bool CheckNumberInMatrix(int arr[3][3], int row, int col, int Num) {
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			if (arr[i][j] == Num) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+//=====================================
+//=====================================
+//#18/3 Intersected Numbers  in Matrix
+void PrintIntersectedNumbers(int arr1[3][3],int arr2[3][3],int row,int col) {
+	int num;
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			num = arr1[i][j];	
+			if (CheckNumberInMatrix(arr2,row,col,num)) {
+				cout << num << "	";
+			}
+		}
+	}
+}
+//=====================================
+//=====================================
+//#19/3 Min/Max Numbers  in Matrix
+int MaxNumberInMatrix(int arr1[3][3], int row, int col) {
+	int MaxNumber = arr1[0][0];
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			if (arr1[i][j] > MaxNumber) {
+				MaxNumber = arr1[i][j];
+			}
+		}
+	}
+	return MaxNumber;
+}
+int MinNumberInMatrix(int arr1[3][3], int row, int col) {
+	int MinNumber = arr1[0][0];
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			if (arr1[i][j] < MinNumber) {
+				MinNumber = arr1[i][j];
+			}
+		}
+	}
+	return MinNumber;
+}
+//=====================================
+//=====================================
+//#20/3 Plainfrome Number
 int main()
 {
 	srand((unsigned)time(NULL));
@@ -238,15 +312,19 @@ cout << "Fill Ordered Matrix : \n";
 	FillMatrixWithRandomNumbers(arr2, 3, 3);
 */	
 	int arr[3][3] = {
-		1,0,0,
-		0,1,0,
+		1,2,3,
+		0,1,8,
 		0,0,1
 	};
 	int arr3[3][3] = { 9,1,1,2,9,3,0,9,8 };
 	//FillMatrixWithRandomNumbers(arr1, 3, 3);
+	PrintMatrix(arr, 3, 3);
+	cout << "================\n";
 	PrintMatrix(arr3, 3, 3);
-	cout << "Number Count is :	"<< CountNumberInMatrix(arr3, 3, 3, 9) << endl;
-	
+	cout << "================\n";
+
+	cout << "Max Number arr : " << MaxNumberInMatrix(arr,3,3) << endl;
+	cout << "Max Number arr3 : " << MaxNumberInMatrix(arr3,3,3) << endl;
 
 
 	system("pause>0");
