@@ -21,7 +21,7 @@ void FillMatrixWithRandomNumbers(int arr[3][3] , short Rows,short Columns) {
 void PrintMatrix(int arr[3][3], short Rows, short Columns) {
 	for (int i = 0; i < Rows; i++) {
 		for (int j = 0; j < Columns; j++) {
-			cout <<setw(3)<< arr[i][j];
+			cout <<setw(3)<< arr[i][j]<<"	";
 		}
 		cout << endl;
 	}
@@ -44,20 +44,73 @@ void PrintEachRowSum(int arr[3][3],int row,int col) {
 }
 //=====================================
 //=====================================
-//#3/3 Sum Each Row in matrix in Array
-void SumMatixRowsInArry(int arr[3][3],int arrSum[3],int row,int col) {
+//#3/3 Sum Each Row in matrix in another Array
+void SumEachRowInMatrixInArray(int arr[3][3],int arrSum[],int row,int col) {
+	int sum = 0;
 	for (int i = 0; i < row;i++) {
 		arrSum[i] = SumEachRowInMatrix(arr, i, col);
 	}
 }
+void PrintArrRowsSum(int arr[],int row) {
+	for (int i = 0; i < row; i++) {
+		cout << arr[i] << "	";
+	}
+}
+//=====================================
+//=====================================
+//#4/3 Sum Each Column in Matrix
+int SumEachColumnInMatrix(int arr[3][3],int row,int col) {
+	int sum = 0;
+	for (int i = 0; i < row;i++) {
+		sum+=arr[i][col];
+	}
+	return sum;
+}
+void PrintEachSumColumnInMatrix(int arr[3][3],int row,int col) {
+	cout << "The Following are the sum of each Column in the matrix : \n";
+	for (int j = 0; j < col; j++) {
+		cout << "Sum of Column "<<j+1<<" = " << SumEachColumnInMatrix(arr, row,j) << endl;
+	}
+}
+//=====================================
+//=====================================
+//#5/3 Sum Each Row in matrix in another Array
+void SumEachColumnInMatrixInAnotherArray(int arr[3][3],int arrSum[],int row ,int col) {
+	for (int j = 0; j < row;j++) {
+		arrSum[j] = SumEachColumnInMatrix(arr, row,j);
+	}
+}
+void PrintArrColumnSum(int arr[], int col) {
+	for (int j = 0; j < col; j++) {
+		cout << arr[j] << "	";
+	}
+}
+//=====================================
+//=====================================
+//#6/3  3x3 Ordered Matrix
+void FillOrderedMatrix(int arr[3][3], int row, int col) {
+	int counter= 0;
+	for (int i = 0; i < row; i++) { 
+		for (int j = i; j < col; j++) {//00  01 02
+			counter++;
+			arr[i][j] = counter;
+		}
+	}
+}
+//=====================================
+//=====================================
+//#7/3 
 int main()
 {
 	srand((unsigned)time(NULL));
+
 	int arr[3][3];
-	FillMatrixWithRandomNumbers(arr, 3, 3);
-	PrintMatrix(arr, 3, 3);
-	cout << endl;
-	PrintEachRowSum(arr, 3, 3);
+	int arrsum[3];
+	
+	cout << "Fill Ordered Matrix : \n";
+	FillOrderedMatrix(arr, 3, 3);
+	PrintMatrix(arr,3,3);
+
 
 	
 }
