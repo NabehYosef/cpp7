@@ -22,6 +22,7 @@ void PrintMatrix(int arr[3][3], short Rows, short Columns) {
 	for (int i = 0; i < Rows; i++) {
 		for (int j = 0; j < Columns; j++) {
 			cout <<setw(3)<< arr[i][j]<<"	";
+			//printf(" 0%d	",2,arr[i][j]);
 		}
 		cout << endl;
 	}
@@ -91,7 +92,7 @@ void PrintArrColumnSum(int arr[], int col) {
 void FillOrderedMatrix(int arr[3][3], int row, int col) {
 	int counter= 0;
 	for (int i = 0; i < row; i++) { 
-		for (int j = i; j < col; j++) {//00  01 02
+		for (int j = 0; j < col; j++) {//00  01 02
 			counter++;
 			arr[i][j] = counter;
 		}
@@ -99,19 +100,156 @@ void FillOrderedMatrix(int arr[3][3], int row, int col) {
 }
 //=====================================
 //=====================================
-//#7/3 
+//#7/3 Traspose Matrix 
+void TransposeMatrix(int arr[3][3],int arrTranspose[3][3], int row, int col) {
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			arrTranspose[i][j] = arr[j][i];
+		}
+	}
+}
+//=====================================
+//=====================================
+//#8/3 Multiply Two Matrix
+void MultiplyMatrix(int arr1[3][3], int arr2[3][3],int Result[3][3], int row, int col) {
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			Result[i][j]=arr1[i][j] * arr2[i][j];
+		}
+	}
+}
+//=====================================
+//=====================================
+//#9/2 Print Middle Row and Column of Matrix 
+void PrintMiddleRowInMatrix(int arr[3][3],int row,int col) {
+	int middlerow = row / 2;
+	for (int j = 0; j < col; j++) {
+		cout << arr[middlerow][j]<<"	";
+		//printf("0%d	", 2, arr[middlerow][j]);
+	}
+}
+void PrintMiddleColumnInMatrix(int arr[3][3], int row, int col) {
+	int middlecol = col / 2;
+	for (int i =0; i < row; i++) {
+		cout << arr[i][middlecol] << "	";
+		//printf("0%d	",2,arr[i][middlecol]);
+	}
+}
+//=====================================
+//=====================================
+//#10/3 Sum of Matrix 
+int SumofMatrix(int arr[3][3],int row,int col) {
+	int sum = 0;
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			sum += arr[i][j];
+		}
+	}
+	return sum;
+}
+//=====================================
+//=====================================
+//11/3 Check Matrix Equality 
+bool CheckMatrixEquality(int arr1[3][3],int arr2[3][3],int row,int col) {
+
+	return (SumofMatrix(arr1, row, col) == SumofMatrix(arr2, row, col));
+	
+}
+//=====================================
+//=====================================
+//12/3 Check Typical Matrix 
+bool CheckTypicalMatrix(int arr1[3][3], int arr2[3][3], int row, int col){
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			if (arr1[i][j]!=arr2[i][j]) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+//=====================================
+//=====================================
+//13/3 Check Identity Matrix
+//My Solution
+bool CheckIdentityMatrix(int arr1[3][3],int row ,int col) {
+	for (int i = 0; i < row; i++) {//0	1  2	 
+		for (int j = i; j <= i; j++) {//0	1	2
+			if (i==j && arr1[i][j] != 1) {
+				return false;
+			}
+			if (i!=j && arr1[i][j]!=0) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+//=====================================
+//=====================================
+//#14/3 Check Scalar Matrix 
+bool CheckScalarMatrix(int arr1[3][3], int row, int col) {
+	int FirstDiagElements = arr1[0][0];
+	for (int i = 0; i < row; i++) {//0	1  2	 
+		for (int j = i; j <= i; j++) {//0	1	2
+			if (i == j && arr1[i][j] != FirstDiagElements) {
+				return false;
+			}
+			if (i != j && arr1[i][j] != 0) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+//=====================================
+//=====================================
+//13/3 Count Number in Matrix
+int CountNumberInMatrix(int arr[3][3] ,int row, int col,int Num) {
+	int counter = 0;
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j <= col; j++) {
+			if (arr[i][j]==Num) {
+				counter++;
+			}
+		}
+	}
+	return counter;
+}
+//=====================================
+//=====================================
+//14/3 Check Sparse Matrix
+
 int main()
 {
 	srand((unsigned)time(NULL));
 
-	int arr[3][3];
-	int arrsum[3];
+	int arr1[3][3];
+	int arr2[3][3];
+	//int arrResult[3][3];
+	//int arrsum[3]; 
+	//int arrTranspose[3][3];
+
+/*
+cout << "Fill Ordered Matrix : \n";
+	FillMatrixWithRandomNumbers(arr1, 3, 3);
+	cout << "Matrix 1 :\n";
+	PrintMatrix(arr1, 3, 3);
+	FillMatrixWithRandomNumbers(arr2, 3, 3);
+*/	
+	int arr[3][3] = {
+		1,0,0,
+		0,1,0,
+		0,0,1
+	};
+	int arr3[3][3] = { 9,1,1,2,9,3,0,9,8 };
+	//FillMatrixWithRandomNumbers(arr1, 3, 3);
+	PrintMatrix(arr3, 3, 3);
+	cout << "Number Count is :	"<< CountNumberInMatrix(arr3, 3, 3, 9) << endl;
 	
-	cout << "Fill Ordered Matrix : \n";
-	FillOrderedMatrix(arr, 3, 3);
-	PrintMatrix(arr,3,3);
 
 
+	system("pause>0");
 	
 }
 
