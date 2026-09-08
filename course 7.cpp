@@ -293,39 +293,162 @@ int MinNumberInMatrix(int arr1[3][3], int row, int col) {
 }
 //=====================================
 //=====================================
-//#20/3 Plainfrome Number
+//#20/3 Plaindrome Number
+bool IsPlaindromeMatrix(int arr[3][3],int row,int col) {
+	for (int i = 0; i < row;i++) {
+		for (int j = 0; j < col/2;j++) {
+			if (arr[i][j]!=arr[i][col-1-j]) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+//=====================================
+//=====================================
+//#21/3 Fibonacci Series 
+void FibonacciSeries(int Num) {
+	int prev1 = 1; // p1 = 1   p2 = 0   fib= 1 
+					// p1=0    p2=1    fib=1
+					//p1=1     p2=1    fib =2.....
+	int prev2 = 0;
+	int FibNumber = 0;
+	for (int i = 0; i < Num;i++) {
+		FibNumber = prev1 + prev2;
+		cout << FibNumber<<"	";
+		prev1 = prev2;
+		prev2 = FibNumber;
+	}
+}
+//=====================================
+//=====================================
+//#22/3 Fibonacci Series with recersion
+void FibnacciSeriesWithRecursion(int Num,int prev1,int prev2) {
+	int FibNumber = 0;
+	if (Num>0) {
+		FibNumber = prev2 + prev1;
+		prev2 = prev1;
+		prev1 = FibNumber;
+		cout << FibNumber << "	";
+		FibnacciSeriesWithRecursion(Num-1,prev1,prev2);
+	}
+}
+//=====================================
+//=====================================
+//#23/3 Print First Letter of Each Word 
+string ReadString() {
+	string s;
+	cout << "Enter Text:\n";
+	getline(cin, s);
+	return s;
+}
+void PrintFirstLetterOfEachWord(string Word){
+	bool FirstLetter = true;
+	for (int i = 0; i < Word.length();i++) {
+		if (Word[i] !=' ' && FirstLetter) {
+			cout << Word[i] << "	";
+		}
+		FirstLetter = (Word[i] == ' ' ? true : false);
+	}
+}
+//=====================================
+//=====================================
+//#24/3 Upper First Letter of Each Word
+string UpperFirstLetter(string Word) {
+	bool FirstLetter = true;
+	for (int i = 0; i < Word.length(); i++) {
+		if (Word[i] != ' ' && FirstLetter) {
+			Word[i] = toupper(Word[i]);
+		}
+		FirstLetter = (Word[i] == ' ' ?true:false);
+	}
+	return Word;
+}
+//=====================================
+//=====================================
+//#25/3 Lower First Letter of Each Word
+string LowerFirstLetter(string Word) {
+	bool FirstLetter = true;
+	for (int i = 0; i < Word.length(); i++) {
+		if (Word[i] != ' ' && FirstLetter) {
+			Word[i] = tolower(Word[i]);
+		}
+		FirstLetter = (Word[i] == ' ' ? true : false);
+	}
+	return Word;
+}
+//=====================================
+//=====================================
+//#26/3 Upper/Lower all Letter of String
+string UpperAllLetterOfString(string Word) {
+	for (int i = 0; i < Word.length(); i++) {
+			Word[i] = toupper(Word[i]);
+	}
+	return Word;
+}
+string LowerAllLetterOfString(string Word) {
+	for (int i = 0; i < Word.length(); i++) {
+		Word[i] = tolower(Word[i]);
+	}
+	return Word;
+}
+//=====================================
+//=====================================
+//#27/3 Invert Charcter Case 
+char ReadChar() {
+	char c;
+	cout << "Enter Char :\n";
+	cin >> c;
+	return c;
+}
+char InverCharcterCase(char c) {
+	return (islower(c) ? toupper(c) : tolower(c));
+}
+//=====================================
+//=====================================
+//#28/3  Invert All Letter Case 
+string InvertAllLetterCase(string Word) {
+	for (int i = 0; i < Word.length();i++) {
+		Word[i]=InverCharcterCase(Word[i]);
+	}
+	return Word;
+}
+//=====================================
+//=====================================
+//#29/3 Count Small and Capial Letters
+void CountSmallCapitalLetter(string Word) {
+	int CountCapitalLetter = 0;
+	int CountsmallLetter = 0;
+	for (int i = 0; i < Word.length(); i++) {
+		if (islower(Word[i])) {
+			CountsmallLetter++;
+		}if (isupper(Word[i])) {
+			CountCapitalLetter++;
+		}
+	}
+	cout << "String Length = " << Word.length() << endl;
+	cout << "Capital Letters Count = " << CountCapitalLetter << endl;
+	cout << "Small Letters Count = " << CountsmallLetter << endl;
+}
+//=====================================
+//=====================================
+//#30/3 Count Letters
+int CountLetters(string Word,char c) {
+	int count = 0;
+	for (int i = 0; i < Word.length(); i++) {
+		if (Word[i]==c) {
+			count++;
+		}
+	}
+	return count;
+}
 int main()
 {
 	srand((unsigned)time(NULL));
 
-	int arr1[3][3];
-	int arr2[3][3];
-	//int arrResult[3][3];
-	//int arrsum[3]; 
-	//int arrTranspose[3][3];
-
-/*
-cout << "Fill Ordered Matrix : \n";
-	FillMatrixWithRandomNumbers(arr1, 3, 3);
-	cout << "Matrix 1 :\n";
-	PrintMatrix(arr1, 3, 3);
-	FillMatrixWithRandomNumbers(arr2, 3, 3);
-*/	
-	int arr[3][3] = {
-		1,2,3,
-		0,1,8,
-		0,0,1
-	};
-	int arr3[3][3] = { 9,1,1,2,9,3,0,9,8 };
-	//FillMatrixWithRandomNumbers(arr1, 3, 3);
-	PrintMatrix(arr, 3, 3);
-	cout << "================\n";
-	PrintMatrix(arr3, 3, 3);
-	cout << "================\n";
-
-	cout << "Max Number arr : " << MaxNumberInMatrix(arr,3,3) << endl;
-	cout << "Max Number arr3 : " << MaxNumberInMatrix(arr3,3,3) << endl;
-
+	string c1 = ReadString();
+	char c2 = ReadChar();
+	cout << CountLetters(c1,c2);
 
 	system("pause>0");
 	
