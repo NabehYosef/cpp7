@@ -416,19 +416,40 @@ string InvertAllLetterCase(string Word) {
 //=====================================
 //=====================================
 //#29/3 Count Small and Capial Letters
-void CountSmallCapitalLetter(string Word) {
-	int CountCapitalLetter = 0;
+int CountSmallLetter(string Word) {
 	int CountsmallLetter = 0;
 	for (int i = 0; i < Word.length(); i++) {
 		if (islower(Word[i])) {
 			CountsmallLetter++;
-		}if (isupper(Word[i])) {
-			CountCapitalLetter++;
 		}
 	}
-	cout << "String Length = " << Word.length() << endl;
-	cout << "Capital Letters Count = " << CountCapitalLetter << endl;
-	cout << "Small Letters Count = " << CountsmallLetter << endl;
+	return CountsmallLetter;
+}
+int CountCapitalLetter(string Word) {
+	int CountCapital = 0;
+	for (int i = 0; i < Word.length(); i++) {
+		if (isupper(Word[i])) {
+			CountCapital++;
+		}
+	}
+	return CountCapital;
+}
+//Count small-capital Letters Another Way solution
+enum enWhatToCont {Small=1 , Capital=2, All=3};
+short CountSmallAndCapitalLetters(string Word, enWhatToCont WhatToCount=enWhatToCont::All) {
+	short counter = 0;
+	if (WhatToCount==enWhatToCont::All) {
+		return Word.length();
+	}
+	for (int i = 0; i < Word.length(); i++) {
+		if (WhatToCount==enWhatToCont::Small && islower(Word[i])) {
+			counter++;
+		}
+		if (WhatToCount==enWhatToCont::Capital && isupper(Word[i])) {
+			counter++;
+		}
+	}
+	return counter;
 }
 //=====================================
 //=====================================
@@ -442,13 +463,63 @@ int CountLetters(string Word,char c) {
 	}
 	return count;
 }
+//=====================================
+//=====================================
+//#31/3 Count Letters (Match Case)
+short CountLettersCase(string Word,char C,bool MatchCase=true) {
+	short counter = 0;
+	for (int i = 0; i < Word.length();i++) {
+		if (MatchCase) {
+			if (Word[i]==C) {
+				counter++;
+			}
+		}
+		else {
+			if (towlower(Word[i])==tolower(C)) {
+				counter++;
+			}
+		}
+	}
+	return counter;
+}
+//=====================================
+//=====================================
+//#32/3 Is Vowel ? 
+bool IsVowel(char c) {
+	c = tolower(c);
+	return ((c == 'a') || (c == 'e') ||(c == 'i') || (c == 'o') || (c == 'u'));
+}
+//=====================================
+//=====================================
+//#33/3 Count Vowel
+short CountVowel(string Word) {
+	short counter = 0;
+	for (int i = 0; i < Word.length(); i++) {
+		if (IsVowel(Word[i])) {
+			counter++;
+		}
+	}
+	return counter;
+}
+//=====================================
+//=====================================
+//#34/3 Print ALl Vowels In String
+void PrintAllVowelsInString(string Word) {
+	for (int i = 0; i < Word.length(); i++) {
+		if (IsVowel(Word[i])) {
+			cout << Word[i] << "	";
+		}
+	}
+}
+//=====================================
+//=====================================
+//35/3 Print Each Word In String
 int main()
 {
 	srand((unsigned)time(NULL));
 
-	string c1 = ReadString();
-	char c2 = ReadChar();
-	cout << CountLetters(c1,c2);
+	string s = ReadString();
+	PrintAllVowelsInString(s);
 
 	system("pause>0");
 	
