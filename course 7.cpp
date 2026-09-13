@@ -513,13 +513,53 @@ void PrintAllVowelsInString(string Word) {
 }
 //=====================================
 //=====================================
-//35/3 Print Each Word In String
+//#35/3 Print Each Word In String
+void PrintEachWordInString(string S1) {
+	string delim = " ";
+	short pos = 0;
+	string sWord;
+	while ((pos=S1.find(delim)) != std::string::npos) {
+		sWord = S1.substr(0,pos);
+		if (sWord!="") {
+			cout << sWord << endl;
+		}
+		S1.erase(0, pos + delim.length());
+	}
+	if (S1!="") {
+		cout << S1 << endl;
+	}
+}
+//=====================================
+//=====================================
+//#36/3  Count Each Word In S{tring
+short CountEachWordInString(string S1) {
+	string delim = " ";
+	short pos = 0;
+	string sWord;
+	short count = 0;
+	while ((pos=S1.find(delim)) != std::string::npos ) {
+		sWord = S1.substr(0,pos);
+		if (sWord!="") {
+			count++;
+		}
+		S1.erase(0,pos+delim.length());
+	}	
+	if (S1 != "") {
+		count++;
+	}
+	return count;
+}
+//=====================================
+//=====================================
+//#37/3 Split String 
 int main()
 {
 	srand((unsigned)time(NULL));
 
 	string s = ReadString();
-	PrintAllVowelsInString(s);
+	PrintEachWordInString(s);
+	cout << "================\n";
+	cout<< CountEachWordInString(s)<<endl;
 
 	system("pause>0");
 	
