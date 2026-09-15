@@ -3,6 +3,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -552,14 +553,68 @@ short CountEachWordInString(string S1) {
 //=====================================
 //=====================================
 //#37/3 Split String 
+vector<string> SplitString(string S1 , string delim=" ") {
+	vector <string> Snew;
+	short pos=0;
+	short token=0;
+	string sWord;
+	
+	while ((pos = S1.find(delim)) != std::string::npos) {
+		sWord = S1.substr(0,pos);
+		if (sWord!="") {
+			Snew.push_back(sWord);
+		}
+		S1.erase(0,pos+delim.length());
+	}
+	if (S1 != "") {
+		Snew.push_back(S1);
+	}
+	return Snew;
+}
+void PrintSplitString(vector<string>S) {
+	for (string &news : S) {
+		cout << news << endl;
+	}
+}
+//=====================================
+//=====================================
+//#38/3 Trim Left , Trim Right ,Trim
+string TrimRight(string S1) {//012345nabeh012345
+	for (int i = S1.length()-1; i >=0;i--) {//nabeh012345   
+		if( S1[i] != ' ') {
+		return S1.substr(0,i+1);
+		}
+	}
+	return "";
+}
+string TrimLeft(string S1) {//0123nabeh
+	for (int i = 0; i < S1.length(); i++) {
+		if (S1[i] != ' ') {
+		return S1.substr(i,S1.length()-i);
+		}
+	}
+	return "";
+}
+string Trim(string S1) {
+	return (TrimRight(TrimLeft(S1)));
+}
+//=====================================
+//=====================================
+//39/3 Join String
+
+
+//=====================================
+//=====================================
+//40/3
 int main()
 {
 	srand((unsigned)time(NULL));
 
 	string s = ReadString();
-	PrintEachWordInString(s);
-	cout << "================\n";
-	cout<< CountEachWordInString(s)<<endl;
+
+	cout<<"Trim Left : " << TrimLeft(s) << endl;
+	cout <<"Trim Right : " << TrimRight(s) << endl;
+	cout << "Trim : "<<Trim(s) << endl;
 
 	system("pause>0");
 	
