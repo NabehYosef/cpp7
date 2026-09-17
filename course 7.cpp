@@ -580,7 +580,7 @@ void PrintSplitString(vector<string>S) {
 //=====================================
 //#38/3 Trim Left , Trim Right ,Trim
 string TrimRight(string S1) {//012345nabeh012345
-	for (int i = S1.length()-1; i >=0;i--) {//nabeh012345   
+	for (int i = S1.length()-1; i >=0;i--) {//nabeh012345
 		if( S1[i] != ' ') {
 		return S1.substr(0,i+1);
 		}
@@ -588,7 +588,7 @@ string TrimRight(string S1) {//012345nabeh012345
 	return "";
 }
 string TrimLeft(string S1) {//0123nabeh
-	for (int i = 0; i < S1.length(); i++) {
+	for (int i = 0; i < S1.length(); i++) {//i=4 
 		if (S1[i] != ' ') {
 		return S1.substr(i,S1.length()-i);
 		}
@@ -601,20 +601,126 @@ string Trim(string S1) {
 //=====================================
 //=====================================
 //39/3 Join String
-
-
+string JoinString(vector<string>vString, string delim = "/") {
+	string S1 = "";
+	for (string& s : vString) {
+		S1 = S1 + s + delim;
+	}
+	return S1.substr(0,S1.length() - delim.length() );
+}
 //=====================================
 //=====================================
-//40/3
+//40/3 Join String (Over Loading)
+string JoinString(string arr[],short length,string delim="/") {
+	string sWord = "";
+	for (int i = 0; i < length;i++) {
+		sWord = sWord + arr[i] + delim;
+	}
+	return sWord.substr(0,sWord.length()-delim.length());
+}
+//=====================================
+//=====================================
+//#41/3 Reverse Word
+string ReversWordsInString(string S1) {
+	vector<string> vString=SplitString(S1," ");
+	string S2 = "";
+	vector<string>::iterator iter = vString.end();
+	while (iter != vString.begin()) {
+		--iter;
+		S2 = S2 + *iter + " ";
+	}
+	S2 = S2.substr(0,S2.length()-1);
+	return S2;
+}
+//=====================================
+//=====================================
+//#42/3 Replace Word
+string ReplaceWord(string S1 , string sToReplace,string ReplaceTo) { //Nabeh  >- mhmd
+	short pos = S1.find(sToReplace);
+	while (pos != std::string::npos) {
+		S1.replace(pos , sToReplace.length(), ReplaceTo);
+		pos = S1.find(sToReplace);
+	}
+	return S1;
+}
+//=====================================
+//=====================================
+//#43/3 Replace Word (Custom)
+string ReplaceWordCustom(string S1 , string StringToReplace, string ReplaceTo,bool MatchCase=true) {
+
+	vector<string> vString = SplitString(S1," ");
+
+	for (string& Vs : vString) {
+		if (MatchCase) {
+				if (Vs == StringToReplace) {
+					Vs = ReplaceTo;
+				}
+		}
+		else {
+				if (LowerAllLetterOfString(Vs)==LowerAllLetterOfString(StringToReplace)) {
+				Vs = ReplaceTo;
+				}
+			}
+	}
+	return JoinString(vString," ");
+}
+//=====================================
+//=====================================
+//#44/3 Remove Punctuations
+string RemovePunctuation(string S1) {
+	string S2 = "";
+	for (int i = 0; i < S1.length();i++) {
+		if (!ispunct(S1[i])) {
+			S2 += S1[i];
+		}
+	}
+	return S2;
+}
+//=====================================
+//=====================================
+//#45/3 Convert Record To Line 
+struct Client {
+	string AccountNumber;
+	string PinCode;
+	string Name;
+	string Phone;
+	double AccountBalance;
+};
+Client ReadNewClient() {
+	Client C1;
+	cout << "Enter Account Number ? ";
+	getline(cin, C1.AccountNumber);
+	cout << "Enter PinCode ? ";
+	getline(cin, C1.PinCode);
+	cout << "Enter Name ? ";
+	getline(cin,C1.Name);
+	cout << "Enter Phone ? ";
+	getline(cin,C1.Phone);
+	cout << "Enter AccountBalance ? ";
+	cin >> C1.AccountBalance;
+	return C1;
+}
+string ConvertRecordToLine(Client C1 , string seperator) {
+	string stClientRecord = "";
+	stClientRecord += C1.AccountNumber + seperator;
+	stClientRecord += C1.PinCode + seperator;
+	stClientRecord += C1.Name + seperator;
+	stClientRecord += C1.Phone + seperator;
+	stClientRecord += to_string(C1.AccountBalance);
+
+	return stClientRecord;
+}
+//=====================================
+//=====================================
+//#46/3 Convert Line Data to Record
+
 int main()
 {
 	srand((unsigned)time(NULL));
 
-	string s = ReadString();
+	Client C1=ReadNewClient();
+	cout << ConvertRecordToLine(C1, "#//#");
 
-	cout<<"Trim Left : " << TrimLeft(s) << endl;
-	cout <<"Trim Right : " << TrimRight(s) << endl;
-	cout << "Trim : "<<Trim(s) << endl;
 
 	system("pause>0");
 	
