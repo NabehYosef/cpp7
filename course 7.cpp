@@ -680,6 +680,7 @@ string RemovePunctuation(string S1) {
 //=====================================
 //#45/3 Convert Record To Line 
 const string ClientsFileName = "Client.txt";
+
 struct stClient {
 	string AccountNumber;
 	string PinCode;
@@ -702,7 +703,7 @@ stClient ReadNewClient() {
 	cin >> C1.AccountBalance;
 	return C1;
 }
-string ConvertRecordToLine(stClient C1 , string seperator) {
+string ConvertRecordToLine(stClient C1 , string seperator="#//#") {
 	string stClientRecord = "";
 	stClientRecord += C1.AccountNumber + seperator;
 	stClientRecord += C1.PinCode + seperator;
@@ -735,55 +736,129 @@ void PrintClientRecord(stClient CLient) {
 	cout << "Phone : " << CLient.Phone << endl;
 	cout << "Account Ballance : " << CLient.AccountBalance << endl;
 }
-//=====================================
+//======================================
 //=====================================
 //#47/3 Add Client To File
 void AddDataLineToFile(string FileName, string line) {
 	fstream Myfile;
-	Myfile.open(FileName,ios::out | ios::app);
+	Myfile.open(FileName,ios::out | ios::app); //write moode
 
 	if (Myfile.is_open()) {
 		Myfile << line << endl;
-
 		Myfile.close();
 	}
 }
 void AddNewClient() {
 	stClient Client;
 	Client = ReadNewClient();
-	AddDataLineToFile(ClientsFileName, ConvertRecordToLine(Client,"#//#"));
+	AddDataLineToFile(ClientsFileName, ConvertRecordToLine(Client));
 }
 void AddClients() {
-	char y='y';
+	char AddMore='y';
 	do {
 		system("cls");
 		cout << "Adding New Client : \n";
 		AddNewClient();
 		cout << "\nClient Added Successfully , do you want add more clients (y/n)?";
-		cin >> y; 
-	} while (y=='y'||y=='Y');
+		cin >> AddMore;
+	} while (toupper(AddMore)=='Y');
 }
 //=====================================
 //=====================================
 //#48/3 Show ALl Clients 
+vector<stClient> LoadClientsFromFile(string FileName) {
+	fstream Myfile;
+	vector<stClient>vClient;
 
+	Myfile.open(FileName,ios::in);//read
+	
+	if (Myfile.is_open()) {
+	string line;
+	stClient Client;
+
+	while (getline(Myfile,line)) {
+
+		Client = ConvertLineToRecord(line);
+
+		vClient.push_back(Client);
+		
+	}
+		Myfile.close();
+	}
+		return vClient;
+}
+void PrintClientRecord2(stClient Client)
+{
+	cout << "| " << setw(15) << left << Client.AccountNumber;
+	cout << "| " << setw(10) << left << Client.PinCode;
+	cout << "| " << setw(40) << left << Client.Name;
+	cout << "| " << setw(12) << left << Client.Phone;
+	cout << "| " << setw(12) << left << Client.AccountBalance;
+}
+void PrintAllClientsData(vector <stClient> vClients)
+{
+	cout << "\n\t\t\t\t\tClient List (" << vClients.size() << ")Client(s).";
+		cout <<"\n_______________________________________________________";
+	cout << "_________________________________________\n" << endl;
+	cout << "| " << left << setw(15) << "Accout Number";
+	cout << "| " << left << setw(10) << "Pin Code";
+	cout << "| " << left << setw(40) << "Client Name";
+	cout << "| " << left << setw(12) << "Phone";
+	cout << "| " << left << setw(12) << "Balance";
+	cout <<
+		"\n_______________________________________________________";
+	cout << "_________________________________________\n" << endl;
+	for (stClient Client : vClients)
+	{
+		PrintClientRecord2(Client);
+		cout << endl;
+	}
+	cout <<
+		"\n_______________________________________________________";
+	cout << "_________________________________________\n" << endl;
+}
 //=====================================
 //=====================================
-//#49/3
+//#49/3 Find Client By Account Number
+bool FindClientByAccountNumber(string AccountNumber, stClient &Client) {
+	vector <stClient> vClient = LoadClientsFromFile(ClientsFileName);
+
+	for (stClient &C : vClient) {
+		if (C.AccountNumber==AccountNumber) {
+			Client = C;
+			return true;
+		}
+	}
+	return false;
+}
+string ReadAccountNumber() {
+	string AccountNumber;
+	cout << "\nPlease Enter AccountNumber:\n";
+	cin >> AccountNumber;
+	return AccountNumber;
+}
 //=====================================
 //=====================================
-//#50/3
+//#50/3 Delete Client By Accout Number
+ 
 //=====================================
 //=====================================
 //#51/3
+
 int main()
 {
 	srand((unsigned)time(NULL));
+	stClient Client;
 
-	//stClient C1=ReadNewClient();
+	string s = ReadAccountNumber();
 
-	AddNewClient();
-
+	if (FindClientByAccountNumber(s, Client)) {
+		cout << "\nThe Following Client Details:\n";
+		PrintClientRecord(Client);
+	}
+	else {
+		cout << "\nClient With AccountNumber ["<<s<<"] Not Found!!!\n";
+	}
 	system("pause>0");
 	
 }
